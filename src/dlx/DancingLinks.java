@@ -4,7 +4,7 @@ import java.util.List;
 
 
 /**
- *
+ * Dancing Linksの実装です。
  *
  */
 public class DancingLinks {
@@ -112,7 +112,7 @@ public class DancingLinks {
 	public void insertVertically(int n) {
 		up[down[n]] = n;
 		down[up[n]] = n;
-		bits[colHead[n]]--;
+		bits[colHead[n]]++;
 	}
 
 	public void insertHorizontally(int n) {
