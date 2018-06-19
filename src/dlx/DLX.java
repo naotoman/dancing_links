@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+/**
+ * {@link dlx#DancingLinks.java}をテストするために作成したクラスです。
+ * Exact Cover Problemを、Donald E. Knuth考案のアルゴリズムDLXにより解きます。
+ * @see <a href="https://arxiv.org/abs/cs/0011047">
+ * Knuth, Donald (2000). "Dancing links". arXiv:cs/0011047</a>
+ */
 public class DLX {
 
 	DancingLinks dl;
 	Deque<Integer> sol;
+
 
 	public boolean solve(List<List<Integer>> subSets, int cols) {
 		dl = new DancingLinks(subSets, cols);
@@ -38,7 +45,7 @@ public class DLX {
 			sol.removeLast();
 			int k = dl.left(r);
 			while(k != r) {
-				uncover(j);
+				uncover(k);
 				k = dl.left(k);
 			}
 
@@ -81,18 +88,22 @@ public class DLX {
 	 */
 	public static void main(String[] args) {
 		List<List<Integer>> ma = new ArrayList<>();
-		for(int i=0; i<4; i++) {
+		int row = 1000;
+		int col = 40;
+		for(int i=0; i<row; i++){
 			ma.add(new ArrayList<>());
+			for(int j=0; j<col; j++) {
+				if(Math.random() < 0.2) {
+					ma.get(i).add(j);
+				}
+			}
 		}
-		ma.get(0).add(0);
-		ma.get(0).add(1);
-		ma.get(1).add(1);
-		ma.get(1).add(3);
-		ma.get(2).add(2);
-		ma.get(3).add(3);
+
 		DLX dlx = new DLX();
-		if(dlx.solve(ma, 4)) {
-			dlx.printSol();
+		if(dlx.solve(ma, col)) {
+			while(!dlx.sol.isEmpty()) {
+				System.out.println(ma.get(dlx.sol.removeFirst()));
+			}
 		}
 
 	}
